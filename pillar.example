@@ -1,0 +1,10 @@
+remi:
+  # URL to the remi RPM to install
+  rpm: default varies with OS; see remi/init.sls
+
+  # URL to the remi GPG key
+  pubkey: default varies with OS; see remi/init.sls
+  pubkey_hash: default varies with OS; see remi/init.sls
+
+  # Disable repo so requires the --enablerepo flag to use
+  disabled: True
