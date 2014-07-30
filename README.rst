@@ -9,7 +9,12 @@ Install the remi RPM and GPG key on RHEL 5/6 or CentOS 5/6.
     <http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html>`_.
 
 Available states
-----------------
+================
+
+.. contents::
+    :local:
 
 ``remi``
-    Installs the GPG key and remi RPM package for the current OS.
+--------
+
+Installs the GPG key and remi RPM package for the current OS.
