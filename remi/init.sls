@@ -21,8 +21,7 @@
 {% if grains['osfullname'] in ('CentOS', 'RHEL') %}
 
 install_remi_pubkey:
-  file:
-    - managed
+  file.managed:
     - name: /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
     - source: {{ salt['pillar.get']('remi:pubkey', pkg.key) }}
     - source_hash:  {{ salt['pillar.get']('remi:pubkey_hash', pkg.key_hash) }}
@@ -31,8 +30,7 @@ include:
     - epel
 
 install_remi_rpm:
-  pkg:
-    - installed
+  pkg.installed:
     - sources:
       - remi-release: {{ salt['pillar.get']('remi:rpm', pkg.rpm) }}
     - requires:
@@ -41,16 +39,14 @@ install_remi_rpm:
 
 {% if salt['pillar.get']('remi:disabled', False) %}
 enable_remi:
-  file:
-    - sed
+  file.sed:
     - name: /etc/yum.repos.d/remi.repo
     - limit: '^enabled'
     - before: [0,1]
     - after: 1
 {% else %}
 disable_remi:
-  file:
-    - sed
+  file.sed:
     - name: /etc/yum.repos.d/remi.repo
     - limit: '^enabled'
     - before: [0,1]
