@@ -39,17 +39,15 @@ install_remi_rpm:
 
 {% if salt['pillar.get']('remi:disabled', False) %}
 enable_remi:
-  file.sed:
+  file.replace:
     - name: /etc/yum.repos.d/remi.repo
-    - limit: '^enabled'
-    - before: [0,1]
-    - after: 1
+    - pattern: '^enabled=\d'
+    - repl: enabled=1
 {% else %}
 disable_remi:
-  file.sed:
+  file.replace:
     - name: /etc/yum.repos.d/remi.repo
-    - limit: '^enabled'
-    - before: [0,1]
-    - after: 0
+    - pattern: '^enabled=\d'
+    - repl: enabled=0
 {% endif %}
 {% endif %}
