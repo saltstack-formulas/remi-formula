@@ -1,24 +1,24 @@
+# Completely ignore non-CentOS, non-RHEL systems
+{% if grains['os_family'] == 'RedHat' %}
+
 # A lookup table for remi GPG keys & RPM URLs for various RedHat releases
 {% set pkg = salt['grains.filter_by']({
-  'CentOS-5': {
+  '5': {
     'key': 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi',
     'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
     'rpm': 'http://mirrors.mediatemple.net/remi/enterprise/remi-release-5.rpm',
   },
-  'CentOS-6': {
+  '6': {
     'key': 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi',
     'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
     'rpm': 'http://mirrors.mediatemple.net/remi/enterprise/remi-release-6.rpm',
   },
-  'CentOS-7': {
+  '7': {
     'key': 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi',
     'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
     'rpm': 'http://mirrors.mediatemple.net/remi/enterprise/remi-release-7.rpm',
   },
-}, 'osfinger') %}
-
-# Completely ignore non-CentOS, non-RHEL systems
-{% if grains['osfullname'] in ('CentOS', 'RHEL') %}
+}, 'osmajorrelease') %}
 
 install_remi_pubkey:
   file.managed:
@@ -38,16 +38,16 @@ install_remi_rpm:
       - pkg: epel
 
 {% if salt['pillar.get']('remi:disabled', False) %}
-enable_remi:
-  file.replace:
-    - name: /etc/yum.repos.d/remi.repo
-    - pattern: '^enabled=\d'
-    - repl: enabled=1
-{% else %}
 disable_remi:
   file.replace:
     - name: /etc/yum.repos.d/remi.repo
     - pattern: '^enabled=\d'
     - repl: enabled=0
+{% else %}
+enable_remi:
+  file.replace:
+    - name: /etc/yum.repos.d/remi.repo
+    - pattern: '^enabled=\d'
+    - repl: enabled=1
 {% endif %}
 {% endif %}
