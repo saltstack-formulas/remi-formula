@@ -20,11 +20,14 @@
   },
 }, 'osmajorrelease') %}
 
+
+{% set remi_settings = salt['pillar.get']('remi') %}
+
 install_remi_pubkey:
   file.managed:
     - name: /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
-    - source: {{ salt['pillar.get']('remi:pubkey', pkg.key) }}
-    - source_hash:  {{ salt['pillar.get']('remi:pubkey_hash', pkg.key_hash) }}
+    - source: {{ remi_settings.pubkey|default(pkg.key) }}
+    - source_hash:  {{ remi_settings.pubkey_hash|default(pkg.key_hash) }}
 
 include:
     - epel
@@ -32,12 +35,12 @@ include:
 install_remi_rpm:
   pkg.installed:
     - sources:
-      - remi-release: {{ salt['pillar.get']('remi:rpm', pkg.rpm) }}
+      - remi-release: {{ remi_settings.rpm|default(pkg.rpm) }}
     - requires:
       - file: install_remi_pubkey
       - pkg: epel
 
-{% if salt['pillar.get']('remi:disabled', False) %}
+{% if remi_settings.disabled|default(False) %}
 disable_remi:
   file.replace:
     - name: /etc/yum.repos.d/remi.repo
@@ -50,4 +53,23 @@ enable_remi:
     - pattern: '^enabled=\d'
     - repl: enabled=1
 {% endif %}
+
+{% if 'repo' in remi_settings %}
+{% for repo,opts in remi_settings.repo.iteritems() %}
+{% if opts.disabled|default(False) %}
+disable_{{ repo }}:
+  file.replace:
+    - name: /etc/yum.repos.d/{{ repo }}.repo
+    - pattern: '^enabled=\d'
+    - repl: enabled=0
+{% else %}
+enable_{{ repo }}:
+  file.replace:
+    - name: /etc/yum.repos.d/{{ repo }}.repo
+    - pattern: '^enabled=\d'
+    - repl: enabled=1
+{% endif %}
+{% endfor %}
+{% endif %}
+
 {% endif %}
