@@ -7,4 +7,12 @@ remi:
   pubkey_hash: default varies with OS; see remi/init.sls
 
   # Disable repo so requires the --enablerepo flag to use
+  # Maintained for compatibility purpose
   disabled: True
+
+  # Variable for all the remi repos (remi-php70, remi-php71, remi and so on)
+  repo:
+    remi:
+      disabled: True
+    remi-php70:
+      disabled: False
