@@ -55,7 +55,7 @@ enable_remi:
 {% endif %}
 
 {% if 'repo' in remi_settings %}
-{% for repo,opts in remi_settings.repo.iteritems() %}
+{% for repo,opts in remi_settings.repo.items() %}
 {% if opts.disabled|default(False) %}
 disable_{{ repo }}:
   file.replace:
