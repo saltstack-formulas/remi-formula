@@ -1,7 +1,7 @@
 remi
 ====
 
-Install the remi RPM and GPG key on RHEL 5/6/7 or CentOS 5/6/7.
+Install the remi RPM and GPG key on RHEL 5/6/7/8 or CentOS 5/6/7/8.
 
 .. note::
 
