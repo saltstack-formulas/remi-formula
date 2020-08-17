@@ -16,3 +16,10 @@ remi:
       disabled: True
     remi-php70:
       disabled: False
+
+  module:
+    glpi:
+      disabled: True
+    php:
+      disabled: False
+      version: remi-7.4
