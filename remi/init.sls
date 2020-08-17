@@ -77,4 +77,28 @@ enable_{{ repo }}:
 {% endfor %}
 {% endif %}
 
+{% if 'module' in remi_settings %}
+{% for module,opts in remi_settings.module.items() %}
+{% if opts.disabled|default(False) %}
+disable_module_{{ module }}:
+  cmd.run:
+    - name: dnf -y module disable {{ module }}{% if opts.version|default(False) %}:{{ opts.version }}{% endif %}
+    - unless: dnf module --disabled list {{ module }}{% if opts.version|default(False) %}:{{ opts.version }}{% endif %}
+{% else %}
+reset_module_{{ module }}:
+  cmd.run:
+    - name: dnf -y module reset {{ module }}
+    - onlyif: dnf module --enabled list {{ module }}
+{% if opts.version|default(False) %}
+    - unless: dnf module --enabled list {{ module }}:{{ opts.version }}
+{% endif %}
+
+enable_module_{{ module }}:
+  cmd.run:
+    - name: dnf -y module enable {{ module }}{% if opts.version|default(False) %}:{{ opts.version }}{% endif %}
+    - unless: dnf module --enabled list {{ module }}{% if opts.version|default(False) %}:{{ opts.version }}{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
 {% endif %}
