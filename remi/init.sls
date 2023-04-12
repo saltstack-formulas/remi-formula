@@ -6,22 +6,22 @@
   '5': {
     'key': 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi',
     'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
-    'rpm': 'http://mirrors.mediatemple.net/remi/enterprise/remi-release-5.rpm',
+    'rpm': 'http://rpms.remirepo.net/enterprise/remi-release-5.rpm',
   },
   '6': {
     'key': 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi',
     'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
-    'rpm': 'http://mirrors.mediatemple.net/remi/enterprise/remi-release-6.rpm',
+    'rpm': 'http://rpms.remirepo.net/enterprise/remi-release-6.rpm',
   },
   '7': {
     'key': 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi',
     'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
-    'rpm': 'http://mirrors.mediatemple.net/remi/enterprise/remi-release-7.rpm',
+    'rpm': 'http://rpms.remirepo.net/enterprise/remi-release-7.rpm',
   },
   '8': {
     'key': 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi',
     'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
-    'rpm': 'http://mirrors.mediatemple.net/remi/enterprise/remi-release-8.rpm',
+    'rpm': 'http://rpms.remirepo.net/enterprise/remi-release-8.rpm',
   },
 }, 'osmajorrelease') %}
 
