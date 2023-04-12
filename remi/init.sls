@@ -45,35 +45,24 @@ install_remi_rpm:
       - file: install_remi_pubkey
       - pkg: epel
 
-{% if remi_settings.disabled|default(False) %}
-disable_remi:
-  file.replace:
-    - name: /etc/yum.repos.d/remi.repo
-    - pattern: '^enabled=\d'
-    - repl: enabled=0
-{% else %}
-enable_remi:
-  file.replace:
-    - name: /etc/yum.repos.d/remi.repo
-    - pattern: '^enabled=\d'
-    - repl: enabled=1
-{% endif %}
-
 {% if 'repo' in remi_settings %}
-{% for repo,opts in remi_settings.repo.items() %}
-{% if opts.disabled|default(False) %}
-disable_{{ repo }}:
-  file.replace:
-    - name: /etc/yum.repos.d/{{ repo }}.repo
-    - pattern: '^enabled=\d'
-    - repl: enabled=0
+{% for repo, config in remi_settings.repo.items() %}
+config_repo_{{ repo }}:
+  module.run:
+    - name: pkg.mod_repo
+    - repo: {{ repo }}
+    - kwargs:
+{% if config.enabled %}
+        enabled: 1
 {% else %}
-enable_{{ repo }}:
-  file.replace:
-    - name: /etc/yum.repos.d/{{ repo }}.repo
-    - pattern: '^enabled=\d'
-    - repl: enabled=1
+        enabled: 0
 {% endif %}
+{% if 'exclude' in config %}
+        exclude: {{ config.exclude|join(',') }}
+{% endif %}
+    - require:
+      - pkg: install_remi_rpm
+
 {% endfor %}
 {% endif %}
 
