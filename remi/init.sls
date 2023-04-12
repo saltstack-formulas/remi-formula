@@ -23,6 +23,11 @@
     'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
     'rpm': 'http://rpms.remirepo.net/enterprise/remi-release-8.rpm',
   },
+  '9': {
+    'key': 'http://rpms.famillecollet.com/RPM-GPG-KEY-remi',
+    'key_hash': 'md5=3abb4e5a7b1408c888e19f718c012630',
+    'rpm': 'http://rpms.remirepo.net/enterprise/remi-release-9.rpm',
+  },
 }, 'osmajorrelease') %}
 
 
