@@ -45,7 +45,7 @@ install_remi_rpm:
       - remi-release: {{ remi_settings.rpm|default(pkg.rpm) }}
     - require:
       - file: install_remi_pubkey
-      - pkg: epel
+      - pkg: epel_release
 
 {% if 'repo' in remi_settings %}
 {% for repo, config in remi_settings.repo.items() %}
