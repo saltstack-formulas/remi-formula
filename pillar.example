@@ -10,6 +10,12 @@ remi:
   # Maintained for compatibility purpose
   disabled: True
 
+  # enable modules on RHEL 8+
+  modules:
+    php:
+      reset: True
+      version: 8.1
+
   # Variable for all the remi repos (remi-php70, remi-php71, remi and so on)
   repo:
     remi:
